@@ -16,43 +16,45 @@ import { AuthContext } from "./context/authContext/AuthContext";
 import ListList from "./pages/listList/ListList";
 import List from "./pages/list/List";
 import NewList from "./pages/newList/NewList";
-
-
-
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
-  const {user} = useContext(AuthContext)
+  const { user } = useContext(AuthContext);
   return (
     <>
-    <BrowserRouter>
-      { user && <Topbar info={user} /> }
-      <div className="container">
-       {user && <Sidebar /> }
-        <Routes>
-          { user ? (
-            <>
-            <Route index path="/" element={<Home />} />
-            <Route path="/users" element={<UserList />} />
-            <Route path="/user/:userId" element={<User />} />
-            {/* <Route path="/newUser" element={<NewUser />} /> */}
-            <Route path="/movies" element={<ProductList />} />
-            <Route path="/product/:productId" element={<Product />} />
-            <Route path="/newproduct" element={<NewProduct />} />
-            <Route path="/lists" element={<ListList />} />
-            <Route path="/list/:listId" element={<List />} />
+      <BrowserRouter>
+        {user && <Topbar info={user} />}
+        <div className="container">
+          {user && <Sidebar />}
+          <Routes>
+            {user ? (
+              <>
+                <Route index path="/" element={<Home />} />
+                <Route path="/users" element={<UserList />} />
+                <Route path="/user/:userId" element={<User />} />
+                {/* <Route path="/newUser" element={<NewUser />} /> */}
+                <Route path="/movies" element={<ProductList />} />
+                <Route path="/product/:productId" element={<Product />} />
+                <Route path="/newproduct" element={<NewProduct />} />
+                <Route path="/lists" element={<ListList />} />
+                <Route path="/list/:listId" element={<List />} />
 
-            <Route path="/newlist" element={<NewList />} />
-            </>
+                <Route path="/newlist" element={<NewList />} />
+              </>
             ) : (
-              <Route path="/" element={<Navigate to="/login"/>}/>
-              )}
-              <Route path="/login" element={user ? <Navigate to="/" replace /> : <Login />}/ >
-        </Routes>
-      </div>
-    </BrowserRouter>
-  </>
+              <Route path="/" element={<Navigate to="/login" />} />
+            )}
+            <Route
+              path="/login"
+              element={user ? <Navigate to="/" replace /> : <Login />}
+            />
+          </Routes>
+          <ToastContainer />
+        </div>
+      </BrowserRouter>
+    </>
   );
 }
 
 export default App;
-
