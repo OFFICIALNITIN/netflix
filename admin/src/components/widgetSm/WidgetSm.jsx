@@ -15,29 +15,36 @@ export default function WidgetSm() {
               "Nitin " + JSON.parse(localStorage.getItem("user")).accessToken,
           },
         });
-        setUser(res.data);
+        // Ensure the response data is an array before setting state
+        if (Array.isArray(res.data)) {
+          setUser(res.data);
+        } else {
+          setUser([]); // Default to an empty array if data is not as expected
+        }
       } catch (error) {
         console.log(error);
+        setUser([]); // Default to an empty array on error
       }
     };
     getNewUsers();
-  });
+  }, []); // Add an empty dependency array to run effect only once
+
   return (
     <div className="widgetSm">
       <span className="widgetSmTitle">New Join Members</span>
       <ul className="widgetSmList">
         {user?.map((u) => (
-          <li className="widgetSmListItem" key={u._id}>
+          <li className="widgetSmListItem" key={u?._id}>
             <img
               src={
-                u.profilePic ||
+                u?.profilePic ||
                 "https://wallpapers.com/images/hd/netflix-profile-pictures-5yup5hd2i60x7ew3.jpg"
               }
               alt=""
               className="widgetSmImg"
             />
             <div className="widgetSmUser">
-              <span className="widgetSmUsername">username: {u.username}</span>
+              <span className="widgetSmUsername">username: {u?.username}</span>
               {/* <span className='widgetSmJobTitle'>
                             Software Engineer
                         </span> */}
