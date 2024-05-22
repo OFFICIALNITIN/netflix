@@ -34,7 +34,7 @@ export default function Home() {
     const getStats = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:8800/api/users/stats",
+          "https://netflix-7yip.onrender.com/api/users/stats",
           {
             headers: {
               token:
