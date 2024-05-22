@@ -19,11 +19,15 @@ import "react-toastify/dist/ReactToastify.css";
 export const getMovies = async (dispatch) => {
   dispatch(getMoviesStart());
   try {
-    const res = await axios.get("/movies", {
-      headers: {
-        token: "Nitin " + JSON.parse(localStorage.getItem("user")).accessToken,
-      },
-    });
+    const res = await axios.get(
+      "https://netflix-7yip.onrender.com/api/movies",
+      {
+        headers: {
+          token:
+            "Nitin " + JSON.parse(localStorage.getItem("user")).accessToken,
+        },
+      }
+    );
     dispatch(getMoviesSuccess(res.data));
     console.log(res.data);
   } catch (error) {
@@ -35,11 +39,16 @@ export const getMovies = async (dispatch) => {
 export const createMovie = async (movie, dispatch) => {
   dispatch(createMovieStart());
   try {
-    const res = await axios.post("/movies/", movie, {
-      headers: {
-        token: "Nitin " + JSON.parse(localStorage.getItem("user")).accessToken,
-      },
-    });
+    const res = await axios.post(
+      "https://netflix-7yip.onrender.com/api/movies/",
+      movie,
+      {
+        headers: {
+          token:
+            "Nitin " + JSON.parse(localStorage.getItem("user")).accessToken,
+        },
+      }
+    );
     dispatch(createMovieSuccess(res.data));
     toast.success("Movie added!");
   } catch (error) {
@@ -53,11 +62,16 @@ export const updateMovie = async (id, movie, dispatch) => {
   dispatch(updateMovieStart());
   console.log(dispatch);
   try {
-    const res = await axios.put(`/movies/${id}`, movie, {
-      headers: {
-        token: "Nitin " + JSON.parse(localStorage.getItem("user")).accessToken,
-      },
-    });
+    const res = await axios.put(
+      `https://netflix-7yip.onrender.com/api/movies/${id}`,
+      movie,
+      {
+        headers: {
+          token:
+            "Nitin " + JSON.parse(localStorage.getItem("user")).accessToken,
+        },
+      }
+    );
     dispatch(updateMovieSuccess(res.data));
     toast.success("Movie updated!");
   } catch (error) {
@@ -70,7 +84,7 @@ export const updateMovie = async (id, movie, dispatch) => {
 export const deleteMovie = async (id, dispatch) => {
   dispatch(deleteMovieStart());
   try {
-    await axios.delete("/movies/" + id, {
+    await axios.delete("https://netflix-7yip.onrender.com/api/movies/" + id, {
       headers: {
         token: "Nitin " + JSON.parse(localStorage.getItem("user")).accessToken,
       },
