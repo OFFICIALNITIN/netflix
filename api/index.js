@@ -13,6 +13,8 @@ const app = express();
 app.use(
   cors({
     origin: "https://devnetflix.vercel.app",
+    methods: ["GET", "POST", "PUT", "DELETE"], // Specify allowed methods
+    credentials: true, // Allow cookies to be sent if needed
   })
 );
 app.use(express.json());

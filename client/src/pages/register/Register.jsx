@@ -1,4 +1,6 @@
 import React, { useRef, useState } from "react";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "./register.scss";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -22,16 +24,49 @@ const Register = () => {
   };
   const handleFinish = async (e) => {
     e.preventDefault();
-    setPassword(passwordRef.current.value);
-    setUsername(usernameRef.current.value);
+    const usernameValue = usernameRef.current.value;
+    const passwordValue = passwordRef.current.value;
+
+    if (!usernameValue || usernameValue.length < 3) {
+      toast.error("Username must be at least 3 characters long", {
+        position: "top-center",
+        theme: "dark",
+        autoClose: 2000,
+      });
+      return;
+    }
+
+    if (!passwordValue || passwordValue.length < 6) {
+      toast.error("Password must be at least 6 characters long", {
+        position: "top-center",
+        theme: "dark",
+        autoClose: 2000,
+      });
+      return;
+    }
+
+    setUsername(usernameValue);
+    setPassword(passwordValue);
+
     try {
       await axios.post("https://netflix-7yip.onrender.com/api/auth/register", {
         email,
-        username,
-        password,
+        username: usernameValue,
+        password: passwordValue,
       });
-      history("/login");
-    } catch (error) {}
+      navigate("/login");
+      toast.success("Registration successful! Redirecting to login...", {
+        position: "top-center",
+        theme: "dark",
+        autoClose: 2000,
+      });
+    } catch (error) {
+      toast.error("Registration failed. Please try again.", {
+        position: "top-center",
+        theme: "dark",
+        autoClose: 2000,
+      });
+    }
   };
 
   return (
