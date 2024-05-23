@@ -10,7 +10,11 @@ const cors = require("cors");
 
 const port = 8800;
 const app = express();
-app.use(cors());
+app.use(
+  cors({
+    origin: "https://devnetflix.vercel.app",
+  })
+);
 app.use(express.json());
 dotenv.config();
 

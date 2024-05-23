@@ -1,4 +1,6 @@
 import axios from "axios";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { loginFailure, loginStart, loginSuccess } from "./AuthActions";
 
 export const login = async (user, dispatch) => {
@@ -9,8 +11,18 @@ export const login = async (user, dispatch) => {
       user
     );
     dispatch(loginSuccess(res.data));
+    toast.success(`${res.data.username} logged In Successfully!`, {
+      position: "top-center",
+      theme: "dark",
+      autoClose: 2000,
+    });
   } catch (error) {
     dispatch(loginFailure());
+    toast.error("Invalid details!", {
+      position: "top-center",
+      theme: "dark",
+      autoClose: 2000,
+    });
   }
 };
 
