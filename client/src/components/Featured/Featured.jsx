@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./featured.scss";
 import { InfoOutlined, PlayArrow } from "@mui/icons-material";
 import axios from "axios";
+import { Link } from "react-router-dom";
 const Featured = ({ type, setGenre }) => {
   const [content, setContent] = useState({});
 
@@ -24,6 +25,8 @@ const Featured = ({ type, setGenre }) => {
     };
     getRandomContent();
   }, [type]);
+
+  console.log(content);
   return (
     <div className="featured">
       {type && (
@@ -32,6 +35,7 @@ const Featured = ({ type, setGenre }) => {
           <select
             name="genre"
             id="genre"
+            value={content?.genre}
             onChange={(e) => setGenre(e.target.value)}
           >
             <option>Genre</option>
@@ -58,12 +62,18 @@ const Featured = ({ type, setGenre }) => {
         <div className="buttons">
           <button className="play">
             <PlayArrow />
-            <span>Play</span>
+            <Link
+              style={{ textDecoration: "none" }}
+              to="/watch"
+              state={{ content: content }}
+            >
+              <span>Play</span>
+            </Link>
           </button>
-          <button className="more">
+          {/* <button className="more">
             <InfoOutlined />
             <span>Info</span>
-          </button>
+          </button> */}
         </div>
       </div>
     </div>
