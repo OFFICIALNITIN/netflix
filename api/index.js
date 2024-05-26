@@ -7,11 +7,11 @@ const userRoute = require("./routes/users");
 const movieRoute = require("./routes/movies");
 const listRoute = require("./routes/lists");
 const cors = require("cors");
+const app = express();
 
 app.use(express.json());
 dotenv.config();
 const port = 8800;
-const app = express();
 const allowedOrigins = [
   "https://devnetflix.vercel.app",
   "https://netflixadmin.vercel.app/",
