@@ -14,8 +14,8 @@ dotenv.config();
 const port = 8800;
 const allowedOrigins = [
   "https://devnetflix.vercel.app",
-  "https://netflixadmin.vercel.app/",
-  "http://localhost:4000/",
+  "https://netflixadmin.vercel.app",
+  "http://localhost:4000",
 ];
 // CORS middleware
 app.use(
