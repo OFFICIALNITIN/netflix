@@ -14,6 +14,6 @@ export const login = async (user, dispatch) => {
     toast.success("logged In Successfully!");
   } catch (error) {
     dispatch(loginFailure());
-    toast.error(error.response.data);
+    toast.error("Something went wrong!");
   }
 };

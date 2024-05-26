@@ -13,35 +13,23 @@ const app = express();
 const allowedOrigins = [
   "https://devnetflix.vercel.app",
   "https://netflixadmin.vercel.app/",
+  "http://localhost:4000/",
 ];
-app.use(
-  cors({
-    origin: (origin, callback) => {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed Cores!"));
-      }
-    },
-    methods: ["GET", "POST", "PUT", "DELETE"], // Specify allowed methods
-    credentials: true, // Allow cookies to be sent if needed
-  })
-);
-
-app.options(
-  "*",
-  cors({
-    origin: (origin, callback) => {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed Cores!"));
-      }
-    },
-    methods: ["GET", "POST", "PUT", "DELETE"], // Specify allowed methods
-    credentials: true, // Allow cookies to be sent if needed
-  })
-);
+// CORS middleware
+app.use((req, res, next) => {
+  const origin = req.headers.origin;
+  if (allowedOrigins.includes(origin)) {
+    res.setHeader("Access-Control-Allow-Origin", origin);
+  }
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+  if (req.method === "OPTIONS") {
+    res.sendStatus(204); // No Content
+  } else {
+    next();
+  }
+});
 app.use(express.json());
 dotenv.config();
 
