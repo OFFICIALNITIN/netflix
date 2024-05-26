@@ -27,6 +27,21 @@ app.use(
     credentials: true, // Allow cookies to be sent if needed
   })
 );
+
+app.options(
+  "*",
+  cors({
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed Cores!"));
+      }
+    },
+    methods: ["GET", "POST", "PUT", "DELETE"], // Specify allowed methods
+    credentials: true, // Allow cookies to be sent if needed
+  })
+);
 app.use(express.json());
 dotenv.config();
 
