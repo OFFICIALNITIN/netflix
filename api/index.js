@@ -10,9 +10,19 @@ const cors = require("cors");
 
 const port = 8800;
 const app = express();
+const allowedOrigins = [
+  "https://devnetflix.vercel.app",
+  "https://netflixadmin.vercel.app/",
+];
 app.use(
   cors({
-    origin: "https://devnetflix.vercel.app",
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed Cores!"));
+      }
+    },
     methods: ["GET", "POST", "PUT", "DELETE"], // Specify allowed methods
     credentials: true, // Allow cookies to be sent if needed
   })
