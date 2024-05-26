@@ -8,6 +8,8 @@ const movieRoute = require("./routes/movies");
 const listRoute = require("./routes/lists");
 const cors = require("cors");
 
+app.use(express.json());
+dotenv.config();
 const port = 8800;
 const app = express();
 const allowedOrigins = [
@@ -16,27 +18,36 @@ const allowedOrigins = [
   "http://localhost:4000/",
 ];
 // CORS middleware
-app.use((req, res, next) => {
-  const origin = req.headers.origin;
-  if (allowedOrigins.includes(origin)) {
-    res.setHeader("Access-Control-Allow-Origin", origin);
-  }
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-  res.setHeader(
-    "Access-Control-Allow-Headers",
-    "Content-Type, Authorization",
-    "token"
-  );
-  res.setHeader("Access-Control-Allow-Credentials", "true");
-  if (req.method === "OPTIONS") {
-    res.setHeader("Access-Control-Max-Age", "86400");
-    res.sendStatus(204); // No Content
-  } else {
-    next();
-  }
-});
-app.use(express.json());
-dotenv.config();
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      // Check if the origin is in the allowedOrigins array
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    methods: ["GET", "POST", "PUT", "DELETE"], // Specify allowed methods
+    credentials: true, // Allow cookies to be sent if needed
+  })
+);
+
+// Middleware to handle preflight requests
+app.options(
+  "*",
+  cors({
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    methods: ["GET", "POST", "PUT", "DELETE"], // Specify allowed methods
+    credentials: true, // Allow cookies to be sent if needed
+  })
+);
 
 mongoose
   .connect(process.env.MONGO_URL)
