@@ -33,18 +33,18 @@ export default function WidgetSm() {
     <div className="widgetSm">
       <span className="widgetSmTitle">New Join Members</span>
       <ul className="widgetSmList">
-        {user?.map((u) => (
-          <li className="widgetSmListItem" key={u?._id}>
+        {user.map((u) => (
+          <li className="widgetSmListItem" key={u._id}>
             <img
               src={
-                u?.profilePic ||
+                u.profilePic ||
                 "https://wallpapers.com/images/hd/netflix-profile-pictures-5yup5hd2i60x7ew3.jpg"
               }
               alt=""
               className="widgetSmImg"
             />
             <div className="widgetSmUser">
-              <span className="widgetSmUsername">username: {u?.username}</span>
+              <span className="widgetSmUsername">username: {u.username}</span>
               {/* <span className='widgetSmJobTitle'>
                             Software Engineer
                         </span> */}
