@@ -40,6 +40,11 @@ mongoose
     console.error("Something went wrong while connecting Database!")
   );
 
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  next();
+});
+
 app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute);
 app.use("/api/movies", movieRoute);
